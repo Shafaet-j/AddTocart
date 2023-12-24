@@ -46,10 +46,10 @@ const ProductsDetails = () => {
   };
 
   return (
-    <section className=" px-5 pb-10">
+    <section className=" px-5 pb-10 mt-40">
       <div className=" items-center container mx-auto lg:flex justify-between gap-7 mt-16">
         <div className=" lg:w-1/2 w-full ">
-          <img className="" src={data?.image} alt="" />
+          <img className="" src={data?.imageUrl} alt="" />
         </div>
         <div className=" text-left space-y-4 lg:w-1/2 w-full">
           <h2 className=" text-4xl font-bold text-black text-left">
