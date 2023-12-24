@@ -5,6 +5,9 @@ import useFetch from "../../hooks/useFetch";
 const Cart = () => {
   const { data } = useFetch("/carts");
   console.log(data);
+
+  //   const total = data.reduce((acc, curr) => acc + curr.total, 0);
+
   return (
     <div className=" pt-10">
       <div className=" mb-10">
