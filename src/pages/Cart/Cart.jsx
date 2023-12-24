@@ -1,12 +1,32 @@
 import React from "react";
 import { FaCross, FaTrash } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const { data } = useFetch("/carts");
   console.log(data);
 
-  //   const total = data.reduce((acc, curr) => acc + curr.total, 0);
+  const total = data?.reduce((acc, curr) => acc + curr.total, 0);
+
+  const handleCartDelete = (id) => {
+    fetch(`https://task-addtocart-server.vercel.app/api/cart/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          toast.success("Item deleted from the cart successfully");
+        } else {
+          toast.error("Failed to delete item from the cart");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+        alert("An error occurred while deleting the item");
+      });
+  };
 
   return (
     <div className=" pt-10">
@@ -37,7 +57,7 @@ const Cart = () => {
                 </div>
               </div>
               <div>
-                <FaTrash size={20} />
+                <FaTrash onClick={() => handleCartDelete(item._id)} size={20} />
               </div>
             </div>
           </div>
@@ -46,7 +66,7 @@ const Cart = () => {
       {data?.length > 0 && (
         <div className=" flex items-center justify-between mb-6 mt-6">
           <h4 className=" text-lg font-semibold">SUBTOTAL</h4>
-          <p className=" text-lg font-semibold">123$</p>
+          <p className=" text-lg font-semibold">${total}</p>
         </div>
       )}
       <div>

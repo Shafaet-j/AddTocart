@@ -3,6 +3,7 @@ import useFetch from "../../../hooks/useFetch";
 import { Link } from "react-router-dom";
 import { Spinner } from "@nextui-org/react";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import toast from "react-hot-toast";
 
 const FeatureProducts = () => {
   const { user } = useContext(AuthContext);
@@ -46,7 +47,7 @@ const FeatureProducts = () => {
       </div>
       <div className=" container mx-auto grid-cols-1 grid gap-4 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 pb-16 px-5">
         {data?.map((product) => (
-          <div className=" group">
+          <div key={product._id} className=" group">
             <div className="bg-[#f8f8f8] overflow-hidden relative">
               <img
                 className=" h-96 object-cover"
