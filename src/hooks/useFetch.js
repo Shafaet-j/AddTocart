@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export const makeRequest = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://task-addtocart-server.vercel.app/api",
 });
 
 const useFetch = (url) => {
@@ -16,7 +16,7 @@ const useFetch = (url) => {
         setLoading(true);
         const res = await makeRequest.get(url);
 
-        setData(res.data);
+        setData(res.data.data);
       } catch (err) {
         console.error("Error fetching data:", err);
 
