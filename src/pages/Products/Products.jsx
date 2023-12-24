@@ -12,7 +12,7 @@ const Products = () => {
   const handleAddtoCart = (product) => {
     console.log(product);
     if (user) {
-      fetch("http://localhost:5000/carts", {
+      fetch("https://task-addtocart-server.vercel.app/api/cart", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -48,7 +48,11 @@ const Products = () => {
         {data?.map((product) => (
           <div key={product._id} className=" group">
             <div className="bg-[#f8f8f8] overflow-hidden relative">
-              <img className=" h-96 object-cover" src={product?.image} alt="" />
+              <img
+                className=" h-96 object-cover"
+                src={product?.imageUrl}
+                alt=""
+              />
               <div className=" absolute group-hover:bottom-2 group-hover:left-0 group-hover:right-0 transition-all -bottom-[50px] duration-300 left-0 right-0 opacity-0 group-hover:opacity-100">
                 <button
                   onClick={() => handleAddtoCart(product)}

@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <section className=" bg-base-100 z-50 border-b-2 sticky top-0">
+    <section className=" bg-base-100 z-50 border-b-2 left-0 right-0 top-0 fixed">
       <div className="navbar bg-base-100 container mx-auto pb-3">
         <div className="navbar-start">
           <div className="dropdown">

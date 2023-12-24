@@ -20,7 +20,7 @@ const Cart = () => {
           <div className=" border p-2">
             <div className=" flex items-center justify-between">
               <div className=" flex gap-4">
-                <img className=" w-14" src={item?.image} alt="" />
+                <img className=" w-14" src={item?.imageUrl} alt="" />
                 <div>
                   <h3 className=" text-xl font-semibold text-black">
                     {item?.title}

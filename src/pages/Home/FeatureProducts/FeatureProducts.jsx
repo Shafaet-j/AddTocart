@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { Link } from "react-router-dom";
 import { Spinner } from "@nextui-org/react";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const FeatureProducts = () => {
+  const { user } = useContext(AuthContext);
   const { data, loading, error } = useFetch("/products");
 
   if (loading) {
@@ -13,6 +15,28 @@ const FeatureProducts = () => {
   if (error) {
     return <p>Error loading data</p>;
   }
+
+  const handleAddtoCart = (product) => {
+    console.log(product);
+    if (user) {
+      fetch("https://task-addtocart-server.vercel.app/api/cart", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(product),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            toast.success("Product added to cart");
+          }
+        });
+    } else {
+      alert("please login");
+    }
+  };
+
   return (
     <section>
       <div className=" py-16">
@@ -24,9 +48,16 @@ const FeatureProducts = () => {
         {data?.map((product) => (
           <div className=" group">
             <div className="bg-[#f8f8f8] overflow-hidden relative">
-              <img className=" h-96 object-cover" src={product?.image} alt="" />
+              <img
+                className=" h-96 object-cover"
+                src={product?.imageUrl}
+                alt=""
+              />
               <div className=" absolute group-hover:bottom-2 group-hover:left-0 group-hover:right-0 transition-all -bottom-[50px] duration-300 left-0 right-0 opacity-0 group-hover:opacity-100">
-                <button className=" bg-black px-8 border-2 border-black hover:bg-white duration-500 hover:text-black py-2 rounded-sm font-medium text-lg text-white">
+                <button
+                  onClick={() => handleAddtoCart(product)}
+                  className=" bg-black px-8 border-2 border-black hover:bg-white duration-500 hover:text-black py-2 rounded-sm font-medium text-lg text-white"
+                >
                   Add to cart
                 </button>
               </div>

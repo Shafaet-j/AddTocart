@@ -11,28 +11,28 @@ const ProductsDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const params = useParams();
 
-  const { data } = useFetch(`products/${params.id}`);
+  const { data } = useFetch(`product/${params.id}`);
   console.log(data);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (product) => {
     if (!selectedColor || !selectedSize) {
       toast.error("Please select color and size before adding to cart.");
       return;
     }
 
-    const productToAdd = {
-      _id: data?._id,
-      image: data?.image,
-      title: data?.title,
-      price: data?.price,
-      quantity,
-      colors: selectedColor,
-      sizes: selectedSize,
-      total: data?.price * quantity,
-    };
+    // const productToAdd = {
+    //   _id: data?._id,
+    //   image: data?.image,
+    //   title: data?.title,
+    //   price: data?.price,
+    //   quantity,
+    //   colors: selectedColor,
+    //   sizes: selectedSize,
+    //   total: data?.price * quantity,
+    // };
 
     axios
-      .post("http://localhost:5000/carts", productToAdd)
+      .post("https://task-addtocart-server.vercel.app/api/cart", product)
       .then((response) => {
         if (response.data.success) {
           toast.success("Item added to cart successfully!");
@@ -111,7 +111,7 @@ const ProductsDetails = () => {
             </div>
             <div>
               <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(data)}
                 className=" bg-black px-8 border-2 border-black hover:bg-white duration-500 hover:text-black py-2 rounded-sm font-medium text-lg text-white"
               >
                 Add to cart
