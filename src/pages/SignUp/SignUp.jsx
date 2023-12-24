@@ -16,25 +16,39 @@ const SignUp = () => {
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-    const photo = form.photo.value;
+    const imageUrl = form.photo.value;
     const password = form.password.value;
 
-    console.log(name, email, password, photo);
+    console.log(name, email, password, imageUrl);
 
     createUser(email, password)
       .then((result) => {
         const createdUser = result.user;
         console.log(createdUser);
-        setError("");
-        form.reset();
-        setSuccess("user created successfully");
-        navigate("/");
-        updateProfilePicture(name, photo)
-          .then((result) => {
-            console.log(result);
+
+        // Send user data to your server
+        fetch("https://task-addtocart-server.vercel.app/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            imageUrl,
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setError("");
+            form.reset();
+            setSuccess("User created successfully");
+            navigate("/");
           })
           .catch((error) => {
-            console.log(error);
+            console.error("Error storing user data:", error);
+            setError("Error storing user data");
           });
       })
       .catch((error) => {
@@ -42,7 +56,6 @@ const SignUp = () => {
         setError(error.message);
       });
   };
-
   return (
     <section>
       <div className="hero min-h-screen">

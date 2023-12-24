@@ -20,17 +20,6 @@ const ProductsDetails = () => {
       return;
     }
 
-    // const productToAdd = {
-    //   _id: data?._id,
-    //   image: data?.image,
-    //   title: data?.title,
-    //   price: data?.price,
-    //   quantity,
-    //   colors: selectedColor,
-    //   sizes: selectedSize,
-    //   total: data?.price * quantity,
-    // };
-
     axios
       .post("https://task-addtocart-server.vercel.app/api/cart", product)
       .then((response) => {
